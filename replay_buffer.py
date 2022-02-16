@@ -14,7 +14,7 @@ class Buffer:
         # NOTE: We add to the buffer everytime we have a new observation - so state is 1 element only
         self.buffer.append([state, action, reward, next_state, done])
 
-        print('----\nself.buffer: {}'.format(self.buffer))
+        # print('----\nself.buffer: {}'.format(self.buffer))
 
     def sample(self, batch_size):
         # Get the random indices
@@ -23,12 +23,12 @@ class Buffer:
         else:
             indices = np.random.choice(np.arange(len(self.buffer)), size=batch_size, replace=False)
 
-        print('indices: {}'.format(indices))
+        # print('indices: {}'.format(indices))
 
         # Put all together into a numpy array
         experiences = np.array(self.buffer)[indices]
 
-        print('experiences: {}'.format(experiences))
+        # print('experiences: {}'.format(experiences))
 
         # Get states and actions and etc. separately
         states = torch.from_numpy(np.stack(experiences[:,0], axis = 0)  ).to(device)
@@ -37,9 +37,9 @@ class Buffer:
         new_states = torch.from_numpy(np.stack(experiences[:,3], axis = 0)).to(device)
         dones = torch.from_numpy(np.stack(experiences[:,4], axis = 0)).to(device)
 
-        print('states: {}, actions: {}, rewards: {}, new_states: {}, dones: {}'.format(
-            states, actions, rewards, new_states, dones
-        ))
+        # print('states: {}, actions: {}, rewards: {}, new_states: {}, dones: {}'.format(
+        #     states, actions, rewards, new_states, dones
+        # ))
 
         return states, actions, rewards, new_states, dones
 

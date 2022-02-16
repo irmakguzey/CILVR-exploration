@@ -22,12 +22,14 @@ class QNetwork(nn.Module):
             nn.ReLU() # TODO: Make sure that this is what you really want to do
         ]
 
-        print('layer_list: {}'.format(layer_list))
-        self.layers = nn.ModuleList(layer_list)
-        print('moduled layer_list: {}'.format(self.layers))
+        # print('layer_list: {}'.format(layer_list))
+        self.layers = nn.Sequential(*layer_list)
+        # print('moduled layer_list: {}'.format(self.layers))
 
     def forward(self, x):
+        # print('x before reshape: {}'.format(x))
         x = x.reshape(-1, self.state_size).float()
+        # print('x after reshape: {}'.format(x))
         return self.layers(x)
 
 q_network = QNetwork(5, [20, 32], 6)
